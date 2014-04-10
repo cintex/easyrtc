@@ -41,10 +41,15 @@
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base)'!=''">
         <DCC_Namespace>System;Xml;Data;Datasnap;Web;Soap;Vcl;Vcl.Imaging;Vcl.Touch;Vcl.Samples;Vcl.Shell;$(DCC_Namespace)</DCC_Namespace>
+        <VerInfo_MajorVer>0</VerInfo_MajorVer>
+        <VerInfo_AutoIncVersion>true</VerInfo_AutoIncVersion>
+        <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <Icon_MainIcon>$(BDS)\bin\delphi_PROJECTICON.ico</Icon_MainIcon>
-        <Manifest_File>None</Manifest_File>
-        <DCC_UnitSearchPath>..\3td;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
         <VerInfo_Locale>2052</VerInfo_Locale>
+        <DCC_UnitSearchPath>..\3td;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
+        <Manifest_File>None</Manifest_File>
+        <VerInfo_MinorVer>1</VerInfo_MinorVer>
+        <VerInfo_Keys>FileVersion=0.1.0.0;ProductVersion=0.1.0.0</VerInfo_Keys>
         <DCC_DcuOutput>..\dcu</DCC_DcuOutput>
         <DCC_ExeOutput>..\bin</DCC_ExeOutput>
         <DCC_E>false</DCC_E>

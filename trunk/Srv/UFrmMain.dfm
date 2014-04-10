@@ -12,6 +12,7 @@ object FrmMain: TFrmMain
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   PixelsPerInch = 96
@@ -28,7 +29,7 @@ object FrmMain: TFrmMain
       000000550806000000EA896047000000017352474200AECE1CE9000000046741
       4D410000B18F0BFC6105000000206348524D00007A26000080840000FA000000
       80E8000075300000EA6000003A98000017709CBA513C00000009704859730000
-      0B0400000B04011BCA2AAD000044FC49444154785EEDBD07785457962DDCEE9E
+      0AFD00000AFD014B9C590B000044FC49444154785EEDBD07785457962DDCEE9E
       79D36D235464051025448E02DC3636C145CE4620440E458E0209101242128522
       208108029184009193C8190A30C9C6B6EC767ED3D39A9E718749AD9E999E1766
       DEFBF7BFD6A97B4A57A55240C2F38C47F57DBB6E3EE99E757738FBECF3CA8FBE
@@ -669,6 +670,17 @@ object FrmMain: TFrmMain
   object pm_main: TPopupMenu
     Left = 136
     Top = 48
+    object ShowMainFrom1: TMenuItem
+      Caption = 'Show MainFrom'
+      OnClick = ShowMainFrom1Click
+    end
+    object N1: TMenuItem
+      Caption = '-'
+    end
+    object Exit1: TMenuItem
+      Caption = 'Exit'
+      OnClick = Exit1Click
+    end
   end
   object tmr_main: TTimer
     Enabled = False
