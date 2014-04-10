@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>1899-12-30 00:00:00.000.015,=C:\Documents and Settings\Administrator\My Documents\RAD Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.890,=C:\Documents and Settings\Administrator\My Documents\RAD Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2014-04-10 09:02:13.593,=C:\Documents and Settings\Administrator\My Documents\RAD Studio\Projects\Unit2.pas</Transaction>
+    <Transaction>2014-04-10 09:03:39.109,H:\svn\easyrtc\Srv\UFrmMain.dfm=C:\Documents and Settings\Administrator\My Documents\RAD Studio\Projects\Unit2.dfm</Transaction>
+    <Transaction>2014-04-10 09:03:39.109,H:\svn\easyrtc\Srv\UFrmMain.pas=C:\Documents and Settings\Administrator\My Documents\RAD Studio\Projects\Unit2.pas</Transaction>
+    <Transaction>2014-04-10 09:03:46.703,H:\svn\easyrtc\Srv\RtcSrv.dproj=C:\Documents and Settings\Administrator\My Documents\RAD Studio\Projects\Project1.dproj</Transaction>
+    <Transaction>2014-04-10 09:24:19.046,=H:\svn\easyrtc\Srv\Unit1.pas</Transaction>
+    <Transaction>2014-04-10 09:24:31.421,=H:\svn\easyrtc\Srv\UGlobe.pas</Transaction>
+  </Transactions>
+</BorlandProject>
