@@ -65,8 +65,7 @@ TYPE
     RtcHs: TRtcHttpServer;
     RtcDp: TRtcDataProvider;
     Fpool: TObjectPool;
-    FTotalRequest, FTotalDataIn, FTotalDataOut: int64;
-    FTime: TDateTime;
+    FTotalRequest, FTotalDataIn, FTotalDataOut, FTime: int64;
     PROCEDURE RtcDpCheckRequest(Sender: TRtcConnection);
     PROCEDURE RtcDpDataReceived(Sender: TRtcConnection);
     PROCEDURE RtcHsDataIn(Sender: TRtcConnection);
@@ -190,7 +189,7 @@ BEGIN
       asInteger['PoolSize'] := Fpool.PoolSize;
       asInteger['ConnectionCount'] := rtchs.TotalServerConnectionCount;
       asLargeInt['TotalDataIn'] := FtotalDataIn;
-      asFloat['ServerTime'] := now() - FTime;
+      asLargeInt['ServerTime'] := (gettickcount - FTime)div 1000;
       asLargeInt['TotalDataOut'] := FTotalDataOut;
       asLargeInt['TotalRequest'] := FTotalRequest;
       cb := SizeOf(_PROCESS_MEMORY_COUNTERS);
@@ -446,7 +445,7 @@ BEGIN
         tmr_Main.Enabled := true;
         ServerAddr := GSysCfg.as_string['ADDR'];
         ServerPort := GSysCfg.as_string['PORT'];
-        FTime := now();
+        FTime := GetTickCount;
         FTotalRequest := 0;
         FTotalDataIn := 0;
         FTotalDataOut := 0;
@@ -476,13 +475,7 @@ BEGIN
     lbl4.Caption := BytesToStr(rtc.asLargeInt['TotalDataIn']);
     lbl5.Caption := BytesToStr(rtc.asLargeInt['TotalDataOut']);
     lbl6.Caption := BytesToStr(rtc.asLargeInt['ConnectionCount']);
-    dt := rtc.asFloat['ServerTime'];
-    DecodeDate(dt, yy, mm, dd);
-    DecodeTime(dt, hh, mi, ss, tt);
-    IF (dd > 0) AND (dt > 1) THEN
-      lbl10.Caption := Format('%d %d:%d:%d', [dd, hh, mi, ss])
-    ELSE
-      lbl10.Caption := Format('%d:%d:%d', [hh, mi, ss]);
+    lbl10.Caption := ConvertTimeToTimestr(rtc.asLargeInt['ServerTime']);
     lbl11.Caption := BytesToStr(rtc.asInteger['PoolSize']);
     lbl12.Caption := BytesToStr(rtc.asLargeInt['MemoryUsed']);
   FINALLY

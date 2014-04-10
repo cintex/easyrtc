@@ -19,8 +19,27 @@ FUNCTION BytesToStr(CONST i64Size: int64): STRING;
 
 FUNCTION GetFileName(CONST fn: STRING): STRING;
 FUNCTION GetContentType(CONST fn: STRING): STRING;
+FUNCTION ConvertTimeToTimestr(SS: int64): STRING;
 
 IMPLEMENTATION
+
+FUNCTION ConvertTimeToTimestr(SS: int64): STRING;
+VAR
+  D, H, M, M1, S: int64;
+BEGIN
+  d:=SS DIV 86400;
+  SS := SS MOD 86400;
+  H := SS DIV 3600;
+  SS := SS MOD 3600;
+  m := SS DIV 60;
+  SS := SS MOD 60;
+  s := SS;
+
+  IF d > 0 THEN
+    result := Format('%dD %.2d:%.2d:%.2d', [d, h, m, s])
+  ELSE
+    result := Format('%.2d:%.2d:%.2d', [h, m, s]);
+END;
 
 FUNCTION BytesToStr(CONST i64Size: int64): STRING;
 CONST
