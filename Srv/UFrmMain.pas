@@ -51,15 +51,20 @@ TYPE
     lbl10: TLabel;
     lbl11: TLabel;
     lbl12: TLabel;
+    ShowMainFrom1: TMenuItem;
+    N1: TMenuItem;
+    Exit1: TMenuItem;
     PROCEDURE FormCreate(Sender: TObject);
     PROCEDURE FormDestroy(Sender: TObject);
     PROCEDURE tmr_mainTimer(Sender: TObject);
+    PROCEDURE ShowMainFrom1Click(Sender: TObject);
+    PROCEDURE Exit1Click(Sender: TObject);
+    PROCEDURE FormCloseQuery(Sender: TObject; VAR CanClose: Boolean);
   private
     { Private declarations }
     RtcHs: TRtcHttpServer;
     RtcDp: TRtcDataProvider;
     Fpool: TObjectPool;
-    FExtList: TStrings;
     FTotalRequest, FTotalDataIn, FTotalDataOut: int64;
     FTime: TDateTime;
     PROCEDURE RtcDpCheckRequest(Sender: TRtcConnection);
@@ -117,6 +122,18 @@ BEGIN
   AObject := NIL;
 END;
 
+PROCEDURE TFrmMain.Exit1Click(Sender: TObject);
+BEGIN
+  StopSrv;
+  Halt(0);
+END;
+
+PROCEDURE TFrmMain.FormCloseQuery(Sender: TObject; VAR CanClose: Boolean);
+BEGIN
+  CanClose := NOT GSysCfg.asBoolean['CLOSE2HIDE'];
+  hide;
+END;
+
 PROCEDURE TFrmMain.FormCreate(Sender: TObject);
 BEGIN
   XLog('______________________________________________________');
@@ -142,6 +159,7 @@ BEGIN
   Fpool.OnDestroyObject := DestroyQuery;
   XLog('System start load system config¡­¡­');
   LoadSysCfg;
+  Caption := GSysCfg.asString['SYSNAME'];
   XLog('System start HTTP server¡­¡­');
   startsrv;
   XLog('System startHTTP server OK');
@@ -242,6 +260,7 @@ BEGIN
                 res := TRtcRecord.Create;
                 TRY
                   res.asString['SID'] := session.ID;
+                  res.asString['SYSNAME'] := GSysCfg.asString['SYSNAME'];
                   FOR i := 0 TO FieldCount - 1 DO
                     BEGIN
                       res.asValue[Fields.Fields[i].FieldName] := Fields.Fields[i].AsVariant;
@@ -290,10 +309,15 @@ BEGIN
 
             rtc := TRtcValue.Create;
             IF info.asrecord['REQ'].asString['RT'] = 'DS' THEN
-              DelphiDataSetToRtc(qry, rtc.NewDataSet)
+              BEGIN
+                DelphiDataSetToRtc(qry, rtc.NewDataSet);
+                write(rtc.toJSON);
+              END
             ELSE
-              DelphiDataSetToRtcArray(qry, rtc.NewArray);
-            write(rtc.toJSON);
+              BEGIN
+                DelphiDataSetToRtcArray(qry, rtc.NewArray);
+                write(format('{"total":%d,"rows":%s}', [qry.RecordCount, rtc.toJSON]));
+              END;
             close;
           EXCEPT
             ON e: exception DO
@@ -349,7 +373,6 @@ END;
 
 PROCEDURE TFrmMain.RtcDpDataReceived(Sender: TRtcConnection);
 VAR
-  i: integer;
   rtc: TRtcRecord;
 BEGIN
   WITH TRtcHttpServer(Sender), Request, Response DO
@@ -405,6 +428,14 @@ BEGIN
     Sender.Sync(RtcHsDataOut)
   ELSE
     FTotalDataOut := FTotalDataOut + Sender.DataOut;
+END;
+
+PROCEDURE TFrmMain.ShowMainFrom1Click(Sender: TObject);
+BEGIN
+  IF Self.Showing THEN
+    Self.Hide
+  ELSE
+    Self.Show;
 END;
 
 PROCEDURE TFrmMain.StartSrv;

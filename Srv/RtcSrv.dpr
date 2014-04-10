@@ -1,16 +1,18 @@
-program RtcSrv;
+PROGRAM RtcSrv;
 
-uses
+USES
   FastMM4,
   Vcl.Forms,
-  UFrmMain in 'UFrmMain.pas' {FrmMain},
-  UGlobe in 'UGlobe.pas';
+  UFrmMain IN 'UFrmMain.pas' {FrmMain},
+  UGlobe IN 'UGlobe.pas';
 
 {$R *.res}
 
-begin
+BEGIN
   Application.Initialize;
-  Application.MainFormOnTaskbar := True;
+  Application.MainFormOnTaskbar := false;
   Application.CreateForm(TFrmMain, FrmMain);
+  Application.ShowMainForm := false;
   Application.Run;
-end.
+END.
+

@@ -1,0 +1,61 @@
+﻿<!DOCTYPE HTML>
+<html>
+
+<head>
+	<title>EasyRtc Server Demo</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="description" content="Description" />
+	<link rel="stylesheet" type="text/css" href="themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="themes/icon.css">
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="js/jquery.cookie.js"></script>
+</head>
+<body>
+	<div id="dlg" class="easyui-dialog" title="User Login" style="width:310px;height:210px;padding:10px"
+			data-options="
+				iconCls: 'icon-save',
+				toolbar: '#dlg-toolbar',
+				buttons: '#dlg-buttons'
+			">
+		<table cellpadding="5">
+	    		<tr>
+	    			<td>Name:</td>
+	    			<td><input class="easyui-validatebox textbox" type="text" name="name" data-options="required:true"></input></td>
+	    		</tr>
+	    		<tr>
+	    			<td>Password:</td>
+	    			<td><input class="easyui-validatebox textbox" type="text" name="pwd" data-options="required:true,validType:'password'"></input></td>
+	    		</tr>
+    </table>
+	</div>
+	<div id="dlg-toolbar" style="padding:10px">
+		Please input login info:
+	</div>
+	<div id="dlg-buttons">
+		<a href="javascript:void(0)" class="easyui-linkbutton" onclick="javascript:Login();">Login</a>
+		<a href="javascript:void(0)" class="easyui-linkbutton" onclick="javascript:$('#dlg').dialog('close')">Reset</a>
+	</div>
+
+</body>
+<script type="text/javascript">
+   $(function($) {
+   	$('#w').window('open');   
+  });
+  function Login(){
+  	  $.getJSON('/LOGIN?{"N":"admin","P":"admin"}',function(json){
+     	  if (!json.ERROR){
+     	    alert('Welcome to ['+json.SYSNAME+'], hello user ['+json.UName+']');
+     	    $.cookie('SID',json.SID);
+     	    $.cookie('UNAME',json.UName);
+     	    $.cookie('SNAME',json.SYSNAME);
+     	    location.href="portal.html";
+     	  }
+     	  else{
+     	   alert(json.ERROR);	     	  
+     	   $.cookie('SID','');
+     	   }
+     	}); 
+  }
+</script>
+</html>
